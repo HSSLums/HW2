@@ -1,0 +1,12 @@
+
+%h1 Delete Existing Movies by Either Title or Rating
+
+= form_tag :method => :put do
+
+  = label :movie, :tor, "Enter 'title' or 'rating'"
+  = text_field :movie, :tor
+
+  = label :movie, :here, 'Enter here'
+  = text_field  :movie, :here
+
+  = submit_tag 'Delete Movie Info'

@@ -4,9 +4,9 @@
 %table#movies
   %thead
     %tr
-      %th{:class=>(params[:sort_by] == "title")?"hilite":""}=link_to "Movie Title", movies_path(:sort_by=>"title"), id: "title_header" 
+      %th{:class=>(@color == "title")?"hilite":""}=link_to "Movie Title", movies_path(:sort_by=>"title"), id: "title_header" 
       %th Rating
-      %th{:class=>(params[:sort_by] == "release_date")?"hilite":""}= link_to "Release Date", movies_path(:sort_by=>"release_date"), id: "release_date_header"
+      %th{:class=>(@color == "release_date")?"hilite":""}= link_to "Release Date", movies_path(:sort_by=>"release_date"), id: "release_date_header"
       %th More Info
   %tbody
     - @movies.each do |movie|
@@ -15,5 +15,14 @@
         %td= movie.rating
         %td= movie.release_date
         %td= link_to "More about #{movie.title}", movie_path(movie)
+        
+= form_tag movies_path, :method => :get, :id=>"ratings_form" do
+  Include:
+  - @all_ratings.each do |rating|
+    = rating
+    = check_box_tag "ratings[#{rating}]" , 'true', @checked.include?(rating), :id=>"ratings_#{rating}"
+  = submit_tag 'Refresh', :id=>"ratings_submit"
 
 = link_to 'Add new movie', new_movie_path
+= link_to 'Update movie', movies_myupdate_path
+= link_to 'Delete movies', movies_mydelete_path
